@@ -22,7 +22,7 @@ class OnboardingScreen extends StatelessWidget {
               SizedBox(height: 30.h),
               const DoctorImageAndText(),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.w),
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Column(
                   children: [
                     Text(
