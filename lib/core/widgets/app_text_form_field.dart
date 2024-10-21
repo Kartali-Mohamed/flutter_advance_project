@@ -5,32 +5,45 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../theming/colors.dart';
 
 class AppTextFormField extends StatelessWidget {
+  final TextEditingController? controller;
   final EdgeInsetsGeometry? contentPadding;
   final InputBorder? focusedBorder;
   final InputBorder? enabledBorder;
+  final InputBorder? focusedErrorBorder;
+  final InputBorder? errorBorder;
   final TextStyle? inputTextStyle;
   final TextStyle? hintStyle;
   final String hintText;
   final bool? isObscureText;
   final Widget? suffixIcon;
   final Color? backgroundColor;
-  const AppTextFormField(
-      {super.key,
-      this.contentPadding,
-      this.focusedBorder,
-      this.enabledBorder,
-      this.inputTextStyle,
-      this.hintStyle,
-      required this.hintText,
-      this.isObscureText,
-      this.suffixIcon,
-      this.backgroundColor});
+  final Function(String?) validator;
+  const AppTextFormField({
+    super.key,
+    this.controller,
+    this.contentPadding,
+    this.focusedBorder,
+    this.enabledBorder,
+    this.inputTextStyle,
+    this.hintStyle,
+    required this.hintText,
+    this.isObscureText,
+    this.suffixIcon,
+    this.backgroundColor,
+    required this.validator,
+    this.focusedErrorBorder,
+    this.errorBorder,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       obscureText: isObscureText ?? false,
       style: TextStyles.font14DarkBlueMedium,
+      validator: (value) {
+        return validator(value);
+      },
       decoration: InputDecoration(
         isDense: true,
         contentPadding: contentPadding ??
@@ -50,6 +63,14 @@ class AppTextFormField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 borderSide: const BorderSide(
                     color: ColorsManager.lighterGray, width: 1.3)),
+        focusedErrorBorder: focusedErrorBorder ??
+            OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: const BorderSide(color: Colors.red, width: 1.3)),
+        errorBorder: errorBorder ??
+            OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: const BorderSide(color: Colors.red, width: 1.3)),
       ),
     );
   }
